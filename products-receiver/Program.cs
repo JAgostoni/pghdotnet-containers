@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Runtime.Loader;
+using System.Threading;
 using System.Threading.Tasks;
 using Apache.NMS;
 using Apache.NMS.ActiveMQ;
@@ -9,8 +11,11 @@ namespace products_receiver
     class Program
     {
         
+        static ManualResetEvent _SIGTERM = new ManualResetEvent(false);
+
         static void Main(string[] args)
         {
+            AssemblyLoadContext.Default.Unloading += obj => _SIGTERM.Set();
 
             var host = Environment.GetEnvironmentVariable("ACTIVE_MQ_HOST") ?? "localhost";
             Console.WriteLine($"ActiveMQ Host: {host}");
@@ -32,8 +37,8 @@ namespace products_receiver
                 connection.Start();
             
 
-            Console.WriteLine("Press enter to close");
-            Console.ReadLine();
+            Console.WriteLine("Press CTRL-C to close");
+            _SIGTERM.WaitOne();
     
         }
     }
