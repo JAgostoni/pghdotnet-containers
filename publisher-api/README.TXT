@@ -1,3 +1,3 @@
 docker network create netug
 docker build . -t netug-publish-api:latest
-docker run -d -p 5001:80 --name netug-pub-api --net netug netug-publish-api:latest
+docker run -d -p 5002:80 --name netug-pub-api --net netug netug-publish-api:latest
