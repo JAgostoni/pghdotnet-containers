@@ -8,7 +8,11 @@ public class NewProductQueue {
 
     public NewProductQueue()
     {
-        _Factory = new ConnectionFactory(new Uri("tcp://localhost:61616"));
+
+        var host = Environment.GetEnvironmentVariable("ACTIVE_MQ_HOST") ?? "localhost";
+
+        Console.WriteLine($"ActiveMQ Host: {host}");
+        _Factory = new ConnectionFactory(new Uri($"tcp://{host}:61616"));
     }
 
     public void SendProduct(Product productToSend) {
