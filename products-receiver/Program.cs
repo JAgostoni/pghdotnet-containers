@@ -22,8 +22,10 @@ namespace products_receiver
 
                 var factory = new ConnectionFactory(new Uri($"tcp://{host}:61616"));
                 var connection = factory.CreateConnection();
+                
                 var session = connection.CreateSession();
-                var target = session.GetTopic("product-updates");
+                //var target = session.GetTopic("product-updates");
+                var target = session.GetQueue("Consumer.product-receiver.VirtualTopic.product-updates");
                 var consumer = session.CreateConsumer(target, null);
                 consumer.Listener += message => {
                     var productJson = (message as ITextMessage)?.Text;

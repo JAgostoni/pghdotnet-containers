@@ -18,7 +18,7 @@ public class NewProductQueue {
     public void SendProduct(Product productToSend) {
         using(var connection = _Factory.CreateConnection()) {
             using(var session = connection.CreateSession() ) {
-                var target = session.GetTopic("product-updates");
+                var target = session.GetTopic("VirtualTopic.product-updates");
                 var productMessage = session.CreateTextMessage(JsonConvert.SerializeObject(productToSend));
                 var producer = session.CreateProducer(target);
                 producer.Send(productMessage);
