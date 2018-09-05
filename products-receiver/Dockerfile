@@ -15,4 +15,5 @@ WORKDIR /app
 COPY --from=build-env /app/out .
 
 ENV ACTIVE_MQ_HOST=netug-activemq
+ENV REDIS_HOST=netug-redis
 ENTRYPOINT ["dotnet", "products-receiver.dll"]

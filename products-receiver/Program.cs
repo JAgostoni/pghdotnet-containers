@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Apache.NMS;
 using Apache.NMS.ActiveMQ;
 using Newtonsoft.Json;
+using StackExchange.Redis;
 
 namespace products_receiver
 {
@@ -18,25 +19,31 @@ namespace products_receiver
             AssemblyLoadContext.Default.Unloading += obj => _SIGTERM.Set();
 
             var host = Environment.GetEnvironmentVariable("ACTIVE_MQ_HOST") ?? "localhost";
-            Console.WriteLine($"ActiveMQ Host: {host}");
+            var redisHost = Environment.GetEnvironmentVariable("REDIS_HOST") ?? "localhost";
 
-                var factory = new ConnectionFactory(new Uri($"tcp://{host}:61616"));
-                var connection = factory.CreateConnection();
-                
-                var session = connection.CreateSession();
-                //var target = session.GetTopic("product-updates");
-                var target = session.GetQueue("Consumer.product-receiver.VirtualTopic.product-updates");
-                var consumer = session.CreateConsumer(target, null);
-                consumer.Listener += message => {
-                    var productJson = (message as ITextMessage)?.Text;
-                    if(!String.IsNullOrEmpty(productJson)) {
-                        try {
-                            var product = JsonConvert.DeserializeObject<Product>(productJson);
-                            Console.WriteLine($"Received Product ID: {product.Id}");
-                        } catch {}
-                    }
-                };
-                connection.Start();
+            Console.WriteLine($"ActiveMQ Host: {host}");
+            Console.WriteLine($"Redis Host: {host}");
+
+            ConnectionMultiplexer redis = ConnectionMultiplexer.Connect(redisHost);
+            IDatabase redisDB = redis.GetDatabase();
+            var factory = new ConnectionFactory(new Uri($"tcp://{host}:61616"));
+            var connection = factory.CreateConnection();
+            
+            var session = connection.CreateSession();
+            //var target = session.GetTopic("product-updates");
+            var target = session.GetQueue("Consumer.product-receiver.VirtualTopic.product-updates");
+            var consumer = session.CreateConsumer(target, null);
+            consumer.Listener += message => {
+                var productJson = (message as ITextMessage)?.Text;
+                if(!String.IsNullOrEmpty(productJson)) {
+                    try {
+                        var product = JsonConvert.DeserializeObject<Product>(productJson);
+                        Console.WriteLine($"Received Product ID: {product.Id}");
+                        redisDB.StringSet(product.Id.ToString(), productJson);
+                    } catch {}
+                }
+            };
+            connection.Start();
             
 
             Console.WriteLine("Press CTRL-C to close");
