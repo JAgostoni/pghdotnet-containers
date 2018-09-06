@@ -1,0 +1,33 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: netug-redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: netug-redis
+  template:
+    metadata:
+      labels:
+        app: netug-redis
+    spec:
+      containers:
+      - name: netug-redis
+        image: redis
+        ports:
+        - containerPort:  6379
+          name:  redis-port
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  netug-redis-service
+spec:
+  selector:
+    app: netug-redis
+  type:  ClusterIP
+  ports:
+  - name:  netug-redis
+    port:  6379
+    targetPort:  6379
