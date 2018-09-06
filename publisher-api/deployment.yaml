@@ -1,0 +1,33 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: netug-pub-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: netug-pub-api
+  template:
+    metadata:
+      labels:
+        app: netug-pub-api
+    spec:
+      containers:
+      - name: netug-pub-api
+        image: kubesreg.azurecr.io/netug-publish-api:latest
+        env:
+          - name: ACTIVE_MQ_HOST
+            value: netug-amq-service-messaging
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  netug-publish-api-service
+spec:
+  selector:
+    app:  netug-pub-api
+  type:  LoadBalancer
+  ports:
+  - name:  http
+    port:  80
+    targetPort:  80
