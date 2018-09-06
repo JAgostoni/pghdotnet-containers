@@ -1,0 +1,35 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: netug-amq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: netug-amq
+  template:
+    metadata:
+      labels:
+        app: netug-amq
+    spec:
+      containers:
+      - name: netug-amq
+        image: rmohr/activemq
+        ports:
+        - containerPort:  8161
+          name:  amq-portal
+        - containerPort:  61616
+          name:  amq-messaging
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  netug-amq-service-portal
+spec:
+  selector:
+    app: netug-amq
+  type:  LoadBalancer
+  ports:
+  - name:  netug-amq-portal
+    port:  8161
+    targetPort:  8161
