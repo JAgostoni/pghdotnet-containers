@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace test_data_gen
@@ -9,6 +11,7 @@ namespace test_data_gen
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Generating data, please wait...");
             var prodGen = new Bogus.Faker<Product>()
                 .RuleFor(p=>p.Name, f=>f.Commerce.ProductName())
                 .RuleFor(p=>p.Slug, (f,p)=>p.Name.Replace(" ", "-").ToLower())
@@ -16,15 +19,14 @@ namespace test_data_gen
 
             HttpClient c = new HttpClient();
 
-            prodGen.Generate(3000).ForEach(p=>
+            Parallel.ForEach(prodGen.Generate(3000), p=>
             {
                 var productJson = JsonConvert.SerializeObject(p);
                 var res = c.PostAsync("http://localhost:5002/api/products", 
                                       new StringContent(productJson, Encoding.UTF8, "application/json")).Result;
-                Console.WriteLine(res.StatusCode);
-                Console.WriteLine($"{p.Slug} : {p.Name}");
             });
-
+            
+            Console.WriteLine("Done.");
         }
     }
 }
