@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: netug-products-receiver
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: netug-products-receiver
+    spec:
+      containers:
+      - name: netug-products-receiver
+        image: kubesreg.azurecr.io/netug-products-receiver:latest
+        env:
+          - name: ACTIVE_MQ_HOST
+            value: netug-amq-service-messaging
+          - name: REDIS_HOST
+            value: netug-redis-service
