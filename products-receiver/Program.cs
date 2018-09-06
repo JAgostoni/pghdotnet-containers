@@ -38,8 +38,8 @@ namespace products_receiver
                 if(!String.IsNullOrEmpty(productJson)) {
                     try {
                         var product = JsonConvert.DeserializeObject<Product>(productJson);
-                        Console.WriteLine($"Received Product ID: {product.Id}");
-                        redisDB.StringSet(product.Id.ToString(), productJson);
+                        Console.WriteLine($"Received Product ID: {product.Slug}");
+                        redisDB.StringSet(product.Slug.ToString(), productJson);
                     } catch {}
                 }
             };
