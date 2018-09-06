@@ -1,0 +1,33 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: netug-portal-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: netug-portal-api
+  template:
+    metadata:
+      labels:
+        app: netug-portal-api
+    spec:
+      containers:
+      - name: netug-portal-api
+        image: kubesreg.azurecr.io/netug-portal-api:latest
+        env:
+          - name: REDIS_HOST
+            value: netug-redis-service
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  netug-portal-api-service
+spec:
+  selector:
+    app:  netug-portal-api
+  type:  LoadBalancer
+  ports:
+  - name:  http
+    port:  80
+    targetPort:  80
