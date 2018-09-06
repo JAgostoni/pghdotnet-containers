@@ -33,3 +33,16 @@ spec:
   - name:  netug-amq-portal
     port:  8161
     targetPort:  8161
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  netug-amq-service-messaging
+spec:
+  selector:
+    app: netug-amq
+  type:  ClusterIP
+  ports:
+  - name:  netug-amq-messaging
+    port:  61616
+    targetPort:  61616
