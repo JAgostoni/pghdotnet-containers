@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: netug-chaos
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: netug-chaos
+  template:
+    metadata:
+      labels:
+        app: netug-chaos
+    spec:
+      containers:
+      - name: netug-chaos
+        image: kubesreg.azurecr.io/netug-chaos:latest
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  netug-chaos-service
+spec:
+  selector:
+    app:  netug-chaos
+  type:  LoadBalancer
+  ports:
+  - name:  http
+    port:  80
+    targetPort:  80

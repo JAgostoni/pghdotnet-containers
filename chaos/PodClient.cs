@@ -32,7 +32,7 @@ public class PodClient {
     }
 
     private KubernetesClientConfiguration Config() {
-        //return KubernetesClientConfiguration.InClusterConfig();
-        return KubernetesClientConfiguration.BuildConfigFromConfigFile();
+        return KubernetesClientConfiguration.InClusterConfig();
+        //return KubernetesClientConfiguration.BuildConfigFromConfigFile();
     }
 }
