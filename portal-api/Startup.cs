@@ -40,7 +40,7 @@ namespace portal_api
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            
             app.UseMvc();
         }
     }

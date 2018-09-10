@@ -16,6 +16,7 @@ namespace products_receiver
 
         static void Main(string[] args)
         {
+            // SETTING THIS MRE on the SIGTERM IS FOR DOCKER!!
             AssemblyLoadContext.Default.Unloading += obj => _SIGTERM.Set();
 
             var host = Environment.GetEnvironmentVariable("ACTIVE_MQ_HOST") ?? "localhost";

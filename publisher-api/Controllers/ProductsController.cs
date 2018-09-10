@@ -15,6 +15,8 @@ namespace publisher_api.Controllers
         {
             var client = new NewProductQueue();
             client.SendProduct(value);
+
+            // NOT SHOWN: PERSIST INTO A DATABASE
         }
 
     }

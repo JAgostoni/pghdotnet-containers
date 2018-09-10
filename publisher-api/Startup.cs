@@ -40,7 +40,6 @@ namespace publisher_api
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
             app.UseMvc();
         }
     }
