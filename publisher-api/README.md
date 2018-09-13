@@ -1,3 +1,6 @@
+## Publisher API
+.NET Core WebAPI for posting new / updated products
+
 ### Create a new network (if not already done)
 `docker network create netug`
 
