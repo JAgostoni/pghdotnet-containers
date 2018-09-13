@@ -11,3 +11,5 @@
 
 ### Deploy to Kubernetes
 `kubectl apply -f deployment.yaml`
+
+[<< PREVIOUS: AMQ](../amq) ..... [NEXT: Publisher API >>](../publisher-api)
