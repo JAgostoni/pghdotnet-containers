@@ -10,4 +10,4 @@
 `docker exec -it netug-redis redis-cli`
 
 ### Deploy to Kubernetes
-`kubectl apply -f deployment.yaml'
+`kubectl apply -f deployment.yaml`
