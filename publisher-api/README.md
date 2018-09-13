@@ -29,3 +29,4 @@ Sample content:
 ### Deploy to Kubernetes
 `kubectl apply -f deployment.yaml`
 
+[[<< PREVIOUS: REDIS](../redis)] ..... [[NEXT: Products Receiver >>](../products-receiver)]
