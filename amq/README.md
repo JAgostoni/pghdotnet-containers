@@ -12,3 +12,5 @@ Default username and password are: admin/admin
 
 ### Deploy to Kubernetes
 `kubectl apply -f deployment.yaml`
+
+[NEXT: REDIS >>](../redis)
