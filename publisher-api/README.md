@@ -24,5 +24,5 @@ Sample content:
 `docker push kubesreg.azurecr.io/netug-publish-api:latest`
 
 ### Deploy to Kubernetes
-`kubectl apply -f deployment.yaml'
+`kubectl apply -f deployment.yaml`
 
