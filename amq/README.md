@@ -11,4 +11,4 @@
 Default username and password are: admin/admin
 
 ### Deploy to Kubernetes
-`kubectl apply -f deployment.yaml'
+`kubectl apply -f deployment.yaml`
