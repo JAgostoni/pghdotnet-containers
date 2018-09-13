@@ -20,3 +20,5 @@
 
 ### Deploy to Kubernetes
 `kubectl apply -f deployment.yaml`
+
+[[<< PREVIOUS: Products Receiver](../products-receiver)] ..... [[NEXT: Test Data Generation >>](../test-data-gen)]
