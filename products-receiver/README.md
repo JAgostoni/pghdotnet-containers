@@ -17,3 +17,5 @@ ActiveMQ client to pop new products off the topic and drop them into Redis.
 
 ### Deploy to Kubernetes
 `kubectl apply -f deployment.yaml`
+
+[[<< PREVIOUS: Publisher API](../publisher-api)] ..... [[NEXT: Portal API >>](../portal-api)]
