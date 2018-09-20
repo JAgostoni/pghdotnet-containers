@@ -1,4 +1,4 @@
-## Containerize your .NET micro services with Kubernetes and Docker
+## Containerize your .NET microservices with Kubernetes and Docker
 Learn a little bit about the history and design around micro-services and containers and container orchestration using Kubernetes. Next, learn how to configure and deploy an ASP.NET Core service using Docker, Azure Kubernetes Service and VSTS Team Build.
 
 Head over the the [Wiki](https://github.com/JAgostoni/pghdotnet-containers/wiki) to get started!
